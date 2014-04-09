@@ -2,6 +2,7 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/getting-started.md */
 
+
 describe('my app', function() {
 
   browser.get('index.html');
@@ -12,17 +13,125 @@ describe('my app', function() {
 
 
   describe('view1', function() {
-
+	var htmlElement;
     beforeEach(function() {
       browser.get('index.html#/view1');
     });
-
 
     it('should render view1 when user navigates to /view1', function() {
       expect(element.all(by.css('[ng-view] p')).first().getText()).
         toMatch(/partial for view 1/);
     });
 
+	it('should have a "Make:" label', function(){
+		htmlElement = element(by.id('lbMake'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getText()).toEqual('Make:');
+	});
+	
+	it('should have a "Make:" edit', function(){
+		htmlElement = element(by.id('edMake'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getAttribute('value')).toEqual('honda');
+	});
+	
+	it('should have a "Make" span', function(){
+		htmlElement = element(by.id('sMake'));
+		expect(htmlElement).not.toBe(undefined);
+	});
+	
+	it('should be  able to enter data in the make edit, edit and span should have the entered value', function(){
+		htmlElement = element(by.id('sMake'));
+		expect(htmlElement).not.toBe(undefined);
+		element(by.id('edMake')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "a"));
+		element(by.id('edMake')).sendKeys(protractor.Key.BACK_SPACE);
+		element(by.id('edMake')).sendKeys('carModel');
+		expect(element(by.id('edMake')).getAttribute('value')).toBe('carModel');
+		expect(htmlElement.getText()).toEqual(element(by.id('edMake')).getAttribute('value'));
+	});
+	
+	it('should have a "Model:" label', function(){
+		htmlElement = element(by.id('lbModel'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getText()).toEqual('Model:');
+	});
+	
+	it('should have a "Model:" edit', function(){
+		htmlElement = element(by.id('edModel'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getAttribute('value')).toEqual('Civic');
+	});
+	
+	it('should have a "Model" span', function(){
+		htmlElement = element(by.id('sModel'));
+		expect(htmlElement).not.toBe(undefined);
+
+	});
+	
+	it('should be  able to enter data in the model edit, edit and span should have the entered value', function(){
+		htmlElement = element(by.id('sModel'));
+		expect(htmlElement).not.toBe(undefined);
+		element(by.id('edModel')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "a"));
+		element(by.id('edModel')).sendKeys(protractor.Key.BACK_SPACE);
+		element(by.id('edModel')).sendKeys('carModel');
+		expect(element(by.id('edModel')).getAttribute('value')).toBe('carModel');
+		expect(htmlElement.getText()).toEqual(element(by.id('edModel')).getAttribute('value'));
+	});
+	
+	it('should have a "Year:" label', function(){
+		htmlElement = element(by.id('lbYear'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getText()).toEqual('Year:');
+	});
+	
+	it('should have a "Year:" edit', function(){
+		htmlElement = element(by.id('edYear'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getAttribute('value')).toEqual('2014');
+	});
+	
+	it('should have a "Year" span', function(){
+		htmlElement = element(by.id('sYear'));
+		expect(htmlElement).not.toBe(undefined);
+
+	});
+	
+	it('should be  able to enter data in the year edit, edit and span should have the entered value', function(){
+		htmlElement = element(by.id('sYear'));
+		expect(htmlElement).not.toBe(undefined);
+		element(by.id('edYear')).sendKeys('2013');
+		expect(element(by.id('edYear')).getAttribute('value')).toBe('2013');
+		expect(htmlElement.getText()).toEqual(element(by.id('edYear')).getAttribute('value'));
+	});
+	
+	it('should have a "Price:" label', function(){
+		htmlElement = element(by.id('lbPrice'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getText()).toEqual('Price:');
+	});
+	
+	it('should have a "Price" edit', function(){
+		htmlElement = element(by.id('edPrice'));
+		expect(htmlElement).not.toBe(undefined);
+		expect(htmlElement.getAttribute('value')).toEqual('24000');
+	});
+	
+	it('should have a "Price" span', function(){
+		htmlElement = element(by.id('sPrice'));
+		expect(htmlElement).not.toBe(undefined);
+
+	});
+	
+	it('should be  able to enter data in the price edit, edit and span should have the entered value', function(){
+		htmlElement = element(by.id('sPrice'));
+		expect(htmlElement).not.toBe(undefined);
+		element(by.id('edPrice')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "a"));
+		element(by.id('edPrice')).sendKeys(protractor.Key.BACK_SPACE);
+		element(by.id('edPrice')).sendKeys('19999');
+		expect(element(by.id('edPrice')).getAttribute('value')).toBe('19999');
+		expect(htmlElement.getText()).toEqual('$19,999.00');
+	});
+	
   });
 
 
@@ -36,7 +145,16 @@ describe('my app', function() {
     it('should render view2 when user navigates to /view2', function() {
       expect(element.all(by.css('[ng-view] p')).first().getText()).
         toMatch(/partial for view 2/);
-    });
+	});
+	it('should have a list of cars and should have the correct number of rows', function(){
+		var htmlCars = element.all(by.repeater('c in cars'));
+		expect(htmlCars.count()).toBe(4);
+	});
+		
+	it('should have have Honda as the make in the first row', function(){
+		var htmlCars = element.all(by.repeater('c in cars').column('c.make'));
+		expect(htmlCars.get(1).getText()).toEqual('honda');
+	});
 
   });
 });

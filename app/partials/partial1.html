@@ -1,23 +1,23 @@
 <p>This is the partial for view 1.</p>
 <form id="frmEdit" name="EditForm" novalidate="">
 	<div>
-		<label>Make:</label>
-		<input type="text" ng-model="car.make"/>
-		<span>{{ car.make }}</span>
+		<label id="lbMake">Make:</label>
+		<input type="text" id="edMake" ng-model="car.make"/>
+		<span id="sMake">{{ car.make }}</span>
 		<br>
-		<label>Model:</label>
-		<input type="text" ng-model="car.model"/>
-		<span>{{ car.model }}</span>
+		<label id="lbModel" >Model:</label>
+		<input type="text"  id="edModel" ng-model="car.model"/>
+		<span id="sModel">{{ car.model }}</span>
 		<br>
-		<label>Year:</label>
-		<Select ng-model="car.year">
+		<label id="lbYear">Year:</label>
+		<Select id="edYear" ng-model="car.year">
 			<option ng-repeat="yr in AvailableYears" ng-model="yr">{{ yr }}</option>
 
 		</Select>
-		<span>{{ car.year }}</span>
+		<span id="sYear">{{ car.year }}</span>
 		<br>
-		<label>Price:</label>
-		<input type="text" ng-model="car.price"/>
-		<span>{{ car.price | currency}}</span>
+		<label id="lbPrice">Price:</label>
+		<input type="text" id="edPrice" ng-model="car.price"/>
+		<span id="sPrice">{{ car.price | currency}}</span>
 	</div>
 </form>
